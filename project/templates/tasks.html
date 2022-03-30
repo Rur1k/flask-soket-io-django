@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% block content %}
+ <div class="box text-center">
+     <div class="box-header">
+         <div class="row">
+             <div class="col-md-6">
+                 <H3>Добавление задачи</H3>
+                 <form method="post">
+                     <div class="row">
+                         <div class="col-md-12">
+                             <input name="task-title" type="text" class="form-control" placeholder="Название задача">
+                             <br>
+                             <textarea name="task-description" class="form-control" placeholder="Описание задачи" style="height: 100px; resize:none"></textarea>
+                             <br>
+                             <input type="submit" class="btn btn-success" value="Добавить">
+                         </div>
+                     </div>
+                 </form>
+             </div>
+             <div class="col-md-6">
+                 <H3>Мои задачи</H3>
+                 <div class="row">
+                     <div class="col-md-12">
+                         <label>Название:</label><br>
+                         <label>Описание:</label><br>
+                         <label>Исполнитель:</label><br>
+                         <label>Статус:</label><br>
+                     </div>
+                 </div>
+             </div>
+         </div>
+     </div>
+     <br>
+     <div class="box-body">
+         <div class="row">
+             <div class="col-md-6">
+                 <H3>Доступные задачи</H3>
+                 <div class="row">
+                     <div class="col-md-12">
+                         <label>Название:</label><br>
+                         <label>Описание:</label><br>
+                         <label>Заказчик:</label><br>
+                         <button class="btn btn-success">Взять задачу</button><br>
+                     </div>
+                 </div>
+             </div>
+             <div class="col-md-6">
+                 <H3>Задачи на выполнении</H3>
+                 <div class="row">
+                     <div class="col-md-12">
+                         <label>Название:</label><br>
+                         <label>Описание:</label><br>
+                         <label>Заказчик:</label><br>
+                         <div class="btn-group">
+                             <button class="btn btn-success">Выполнена</button>
+                             <button class="btn btn-danger">Отказаться</button>
+                         </div>
+                     </div>
+                 </div>
+             </div>
+         </div>
+     </div>
+ </div>
+{% endblock %}
