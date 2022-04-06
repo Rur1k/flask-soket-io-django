@@ -1,21 +1,23 @@
 from django.contrib import admin
 from django.urls import path, include
-
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView,
+)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('main.urls')),
-    path('api-auth', include('rest_framework.urls')),
-    path('auth/', include('djoser.urls')),
-    path('auth/', include('djoser.urls.jwt')),
+    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
    ]
 
 # curl \
 #   -X POST \
 #   -H "Content-Type: application/json" \
 #   -d '{"email": "admin@admin.com", "password": "admin"}' \
-#   http://127.0.0.1:8000/auth/jwt/create/
-
+#   http://127.0.0.1:8000/api/token/
+#
 # curl \
-#   -H "Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjQ4ODEzNjk1LCJpYXQiOjE2NDg4MTMzOTUsImp0aSI6IjRhOGRiZmZkNDI2NTRiNzk5YzUyYWYyYWQ2MWVlMDAxIiwidXNlcl9pZCI6MX0.CXKK78Y4xCope6LuaDaJQUKIQiaTT7zMNfvuWMARr8Y" \
-#   http://127.0.0.1:8000/api/some-protected-view/
+#   -H "Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjQ5MjU2MDY4LCJqdGkiOiJjNzRmNTQ3YzhiZjU0Yjc3YWIyN2E2OWZmODYzN2NiNiIsInVzZXJfaWQiOjF9.VutCAFwy82Ty69cc_Ywn9RKEDAOyNCRhwCsiBgR3lD0" \
+#   http://localhost:8000/api/some-protected-view/

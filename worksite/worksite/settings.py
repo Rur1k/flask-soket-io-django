@@ -147,20 +147,6 @@ DJOSER = {
 }
 
 SIMPLE_JWT = {
-    'AUTH_HEADER_TYPES': ('JWT',)
-}
-
-
-CELERY_RESULT_BACKEND = 'django-db'
-CELERY_CACHE_BACKEND = 'django-cache'
-CELERY_BROKER_URL = 'amqp://localhost'
-
-CELERY_ACCEPT_CONTENT = ['application/json']
-CELERY_TASK_SERIALIZER = 'json'
-CELERY_RESULT_SERIALIZER = 'json'
-CELERY_TIMEZONE = 'Europe/Kiev'
-
-SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=5),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
     'ROTATE_REFRESH_TOKENS': False,

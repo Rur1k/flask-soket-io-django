@@ -47,22 +47,16 @@ class User(AbstractBaseUser, PermissionsMixin):
     def __str__(self):
         return self.username
 
-    @property
-    def token(self):
-        return self._generate_jwt_token()
-
-    def get_full_name(self):
-        return self.username
-
-    def get_short_name(self):
-        return self.username
-
-    def _generate_jwt_token(self):
-        dt = datetime.now() + timedelta(days=60)
-
-        token = jwt.encode({
-            'id': self.pk,
-            'exp': int(dt.strftime('%s'))
-        }, settings.SECRET_KEY, algorithm='HS256')
-
-        return token
+    # @property
+    # def token(self):
+    #     return self._generate_jwt_token()
+    #
+    # def _generate_jwt_token(self):
+    #     dt = datetime.now() + timedelta(days=60)
+    #
+    #     token = jwt.encode({
+    #         'id': self.pk,
+    #         'exp': int(dt.strftime('%s'))
+    #     }, settings.SECRET_KEY, algorithm='HS256')
+    #
+    #     return token
