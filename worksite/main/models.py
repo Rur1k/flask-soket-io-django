@@ -49,8 +49,17 @@ class User(AbstractBaseUser, PermissionsMixin):
 
 
 class Task(models.Model):
+    STATUS = (
+        ('new', 'Новая'),
+        ('in_work', 'В работе'),
+        ('completed', 'Выполнена'),
+        ('cancel', 'Отмена'),
+        ('refusal', 'Отказ'),
+    )
+    
     id = models.AutoField(unique=True, primary_key=True)
     creator = models.ForeignKey(User, on_delete=models.CASCADE, related_name='creator', null=True, blank=True)
     name = models.CharField('Название', max_length=64)
     description = models.TextField(null=True, blank=True)
     executor = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True, related_name='executor')
+    status = models.CharField(max_length=16, choices=STATUS, default="new")

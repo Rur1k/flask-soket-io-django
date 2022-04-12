@@ -38,8 +38,8 @@ def main(request):
     if request.user.is_authenticated:
         all_task = Task.objects.all()
         my_task = all_task.filter(creator=request.user)
-        available_to_me = all_task.filter(~Q(creator=request.user), executor=None)
-        execute = all_task.filter(executor=request.user)
+        available_to_me = all_task.filter(~Q(creator=request.user), executor=None, status='new')
+        execute = all_task.filter(executor=request.user, status='in_work')
     else:
         my_task = None
         available_to_me = None
@@ -64,4 +64,33 @@ def create_task(request):
             save_creator.save()
         else:
             print(form.errors)
+    return redirect('main')
+
+
+def give_task(request, task_id):
+    task = Task.objects.get(id=task_id)
+    task.executor = request.user
+    task.status = 'in_work'
+    task.save()
+    return redirect('main')
+
+
+def complete_task(request, task_id):
+    task = Task.objects.get(id=task_id)
+    task.status = 'complete'
+    task.save()
+    return redirect('main')
+
+
+def cancel_task(request, task_id):
+    task = Task.objects.get(id=task_id)
+    task.status = 'cancel'
+    task.save()
+    return redirect('main')
+
+
+def refusal_task(request, task_id):
+    task = Task.objects.get(id=task_id)
+    task.status = 'refusal'
+    task.save()
     return redirect('main')

@@ -35,7 +35,8 @@
                          <label>Название: </label>{{ obj.name }}<br>
                          <label>Описание: </label>{{ obj.description }}<br>
                          <label>Исполнитель: </label>{{ obj.executor }}<br>
-                         <label>Статус: </label><br>
+                         <label>Статус: </label> {{ obj.status }}<br>
+                         <a href="{% url 'cancel_task' obj.id %}" class="btn btn-danger">Отменить</a><br>
                      </div>
                      {% endfor %}
                  </div>
@@ -53,7 +54,7 @@
                          <label>Название:</label> {{ obj.name }}<br>
                          <label>Описание:</label> {{ obj.description }}<br>
                          <label>Заказчик:</label> {{ obj.creator }}<br>
-                         <button class="btn btn-success">Взять задачу</button><br>
+                         <a href="{% url 'give_task' obj.id %}" class="btn btn-success">Взять задачу</a><br>
                      </div>
                      {% endfor %}
                  </div>
@@ -67,8 +68,8 @@
                          <label>Описание:</label> {{ obj.description }}<br>
                          <label>Заказчик:</label> {{ obj.creator }}<br>
                          <div class="btn-group">
-                             <button class="btn btn-success">Выполнена</button>
-                             <button class="btn btn-danger">Отказаться</button>
+                             <a href="{% url 'complete_task' obj.id %}" class="btn btn-success">Выполнена</a>
+                             <a href="{% url 'refusal_task' obj.id %}" class="btn btn-danger">Отказаться</a>
                          </div>
                      </div>
                      {% endfor %}
