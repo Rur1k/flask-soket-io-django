@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+{% if messages %}
+    {% for message in messages %}
+    <div class="alert alert-success alert-dismissible" role="alert">
+        {{ message }}
+    </div>
+    {% endfor %}
+{% endif %}
+{% if request.user.is_authenticated %}
+ <div class="box text-center">
+     <div class="box-header">
+         <div class="row">
+             <div class="col-md-6 border border-secondary">
+                 <H3>Добавление задачи</H3>
+                 <form method="post" action="{% url 'create_task' %}">
+                     {% csrf_token %}
+                     <div class="row">
+                         <div class="col-md-12">
+                             {{ task_form.name }}
+                             <br>
+                             {{ task_form.description }}
+                             <br>
+                             <input type="submit" name="create" class="btn btn-success" value="Добавить">
+                         </div>
+                     </div>
+                 </form>
+             </div>
+             <div class="col-md-6 border border-secondary">
+                 <H3>Мои задачи</H3>
+                 <div class="row">
+                     {% for obj in my_task %}
+                     <div class="col-md-12 border border-primary">
+                         <label>Название: </label>{{ obj.name }}<br>
+                         <label>Описание: </label>{{ obj.description }}<br>
+                         <label>Исполнитель: </label>{{ obj.executor }}<br>
+                         <label>Статус: </label><br>
+                     </div>
+                     {% endfor %}
+                 </div>
+             </div>
+         </div>
+     </div>
+     <br>
+     <div class="box-body">
+         <div class="row">
+             <div class="col-md-6 border border-secondary">
+                 <H3>Доступные задачи</H3>
+                 <div class="row">
+                     {% for obj in available_to_me %}
+                     <div class="col-md-12 border border-success">
+                         <label>Название:</label> {{ obj.name }}<br>
+                         <label>Описание:</label> {{ obj.description }}<br>
+                         <label>Заказчик:</label> {{ obj.creator }}<br>
+                         <button class="btn btn-success">Взять задачу</button><br>
+                     </div>
+                     {% endfor %}
+                 </div>
+             </div>
+             <div class="col-md-6 border border-secondary">
+                 <H3>Задачи на выполнении</H3>
+                 <div class="row">
+                     {% for obj in execute %}
+                     <div class="col-md-12 border border-warning">
+                         <label>Название:</label> {{ obj.name }}<br>
+                         <label>Описание:</label> {{ obj.description }}<br>
+                         <label>Заказчик:</label> {{ obj.creator }}<br>
+                         <div class="btn-group">
+                             <button class="btn btn-success">Выполнена</button>
+                             <button class="btn btn-danger">Отказаться</button>
+                         </div>
+                     </div>
+                     {% endfor %}
+                 </div>
+             </div>
+         </div>
+     </div>
+ </div>
+{% endif %}
+{% endblock %}

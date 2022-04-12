@@ -1,7 +1,11 @@
 from django.urls import path, include
-from .views import RegistrationAPIView, LoginAPIView
+from . import views
+
 
 urlpatterns = [
-    path('users/', RegistrationAPIView.as_view()),
-    path('users/login/', LoginAPIView.as_view()),
+    path('', views.main, name='main'),
+    path('login', views.login_user, name='login_user'),
+    path('logout', views.logout_user, name='logout'),
+    path('create', views.create_task, name='create_task')
+
 ]

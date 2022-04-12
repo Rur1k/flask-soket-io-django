@@ -47,16 +47,10 @@ class User(AbstractBaseUser, PermissionsMixin):
     def __str__(self):
         return self.username
 
-    # @property
-    # def token(self):
-    #     return self._generate_jwt_token()
-    #
-    # def _generate_jwt_token(self):
-    #     dt = datetime.now() + timedelta(days=60)
-    #
-    #     token = jwt.encode({
-    #         'id': self.pk,
-    #         'exp': int(dt.strftime('%s'))
-    #     }, settings.SECRET_KEY, algorithm='HS256')
-    #
-    #     return token
+
+class Task(models.Model):
+    id = models.AutoField(unique=True, primary_key=True)
+    creator = models.ForeignKey(User, on_delete=models.CASCADE, related_name='creator', null=True, blank=True)
+    name = models.CharField('Название', max_length=64)
+    description = models.TextField(null=True, blank=True)
+    executor = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True, related_name='executor')
