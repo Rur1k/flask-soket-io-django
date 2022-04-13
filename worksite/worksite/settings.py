@@ -81,11 +81,18 @@ DATABASES = {
         'PASSWORD': os.getenv('DB_PASSWORD'),
         'HOST': '127.0.0.1',
         'PORT': '5432',
+    },
+    'mongo_database': {
+        'ENGINE': 'djongo',
+        'NAME': 'flask_db',
+        'CLIENT': {
+                'host': 'localhost',
+                'port': 27017,
+                'username': 'flaskAdmin',
+                'password': 'password',
+        }
     }
 }
-
-from mongoengine import connect
-connect('flask_db') # Соедините базу данных mongodb только сейчас
 
 
 # Password validation
