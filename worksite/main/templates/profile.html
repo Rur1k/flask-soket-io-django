@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+{% if messages %}
+    {% for message in messages %}
+    <div class="alert alert-success alert-dismissible" role="alert">
+        {{ message }}
+    </div>
+    {% endfor %}
+{% endif %}
+{% if request.user.is_authenticated %}
+    <div>
+        <label>Токен</label>
+        <textarea class="form-comtrol col-md-12" readonly>{{ token }}</textarea>
+    </div>
+{% endif %}
+{% endblock %}

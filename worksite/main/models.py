@@ -62,4 +62,4 @@ class Task(models.Model):
     name = models.CharField('Название', max_length=64)
     description = models.TextField(null=True, blank=True)
     executor = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True, related_name='executor')
-    status = models.CharField(max_length=16, choices=STATUS, default="new")
+    status = models.CharField(max_length=16, choices=STATUS, default="new", blank=True)

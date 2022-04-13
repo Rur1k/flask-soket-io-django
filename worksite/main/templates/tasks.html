@@ -12,7 +12,7 @@
  <div class="box text-center">
      <div class="box-header">
          <div class="row">
-             <div class="col-md-6 border border-secondary">
+             <div class="col-md-12 border border-secondary" style="padding:1%">
                  <H3>Добавление задачи</H3>
                  <form method="post" action="{% url 'create_task' %}">
                      {% csrf_token %}
@@ -27,46 +27,49 @@
                      </div>
                  </form>
              </div>
-             <div class="col-md-6 border border-secondary">
-                 <H3>Мои задачи</H3>
-                 <div class="row">
-                     {% for obj in my_task %}
-                     <div class="col-md-12 border border-primary">
-                         <label>Название: </label>{{ obj.name }}<br>
-                         <label>Описание: </label>{{ obj.description }}<br>
-                         <label>Исполнитель: </label>{{ obj.executor }}<br>
-                         <label>Статус: </label> {{ obj.status }}<br>
-                         <a href="{% url 'cancel_task' obj.id %}" class="btn btn-danger">Отменить</a><br>
-                     </div>
-                     {% endfor %}
-                 </div>
-             </div>
          </div>
      </div>
      <br>
      <div class="box-body">
          <div class="row">
-             <div class="col-md-6 border border-secondary">
+             <div class="col-md-4 border border-secondary">
+                 <H3>Мои задачи</H3>
+                 <div class="row">
+                     {% for obj in my_task %}
+                     <div class="col-md-12 border border-primary" style="padding:1%">
+                         <label><b>Название: </b></label>{{ obj.name }}<br>
+                         <label><b>Описание: </b></label>{{ obj.description }}<br>
+                         <label><b>Исполнитель: </b></label>{{ obj.executor }}<br>
+                         <label><b>Статус: </b></label> {{ obj.status }}<br>
+                         <div class="btn-group">
+                             <a href="{% url 'cancel_task' obj.id %}" class="btn btn-warning">Отменить</a><br>
+                             <a href="{% url 'delete_task' obj.id %}" class="btn btn-danger">Удалить</a>
+                         </div>
+                     </div>
+                     {% endfor %}
+                 </div>
+             </div>
+             <div class="col-md-4 border border-secondary">
                  <H3>Доступные задачи</H3>
                  <div class="row">
                      {% for obj in available_to_me %}
-                     <div class="col-md-12 border border-success">
-                         <label>Название:</label> {{ obj.name }}<br>
-                         <label>Описание:</label> {{ obj.description }}<br>
-                         <label>Заказчик:</label> {{ obj.creator }}<br>
+                     <div class="col-md-12 border border-success" style="padding:1%">
+                         <label><b>Название:</b></label> {{ obj.name }}<br>
+                         <label><b>Описание:</b></label> {{ obj.description }}<br>
+                         <label><b>Заказчик:</b></label> {{ obj.creator }}<br>
                          <a href="{% url 'give_task' obj.id %}" class="btn btn-success">Взять задачу</a><br>
                      </div>
                      {% endfor %}
                  </div>
              </div>
-             <div class="col-md-6 border border-secondary">
+             <div class="col-md-4 border border-secondary">
                  <H3>Задачи на выполнении</H3>
                  <div class="row">
                      {% for obj in execute %}
-                     <div class="col-md-12 border border-warning">
-                         <label>Название:</label> {{ obj.name }}<br>
-                         <label>Описание:</label> {{ obj.description }}<br>
-                         <label>Заказчик:</label> {{ obj.creator }}<br>
+                     <div class="col-md-12 border border-warning" style="padding:1%">
+                         <label><b>Название:</b></label> {{ obj.name }}<br>
+                         <label><b>Описание:</b></label> {{ obj.description }}<br>
+                         <label><b>Заказчик:</b></label> {{ obj.creator }}<br>
                          <div class="btn-group">
                              <a href="{% url 'complete_task' obj.id %}" class="btn btn-success">Выполнена</a>
                              <a href="{% url 'refusal_task' obj.id %}" class="btn btn-danger">Отказаться</a>

@@ -4,6 +4,7 @@ from django.contrib.auth import authenticate, login, logout
 from .models import User, Task
 from .forms import LoginForm, TaskForm
 from django.db.models import Q
+from rest_framework_simplejwt.tokens import RefreshToken
 
 
 # Логика входа
@@ -94,3 +95,18 @@ def refusal_task(request, task_id):
     task.status = 'refusal'
     task.save()
     return redirect('main')
+
+
+def delete_task(request, task_id):
+    task = Task.objects.get(id=task_id)
+    task.delete()
+    return redirect('main')
+
+
+def profile(request):
+    refresh = RefreshToken.for_user(request.user)
+    token = str(refresh.access_token)
+    data = {
+        'token': token
+    }
+    return render(request, 'profile.html', data)
