@@ -6,9 +6,18 @@
   <div class = 'register-form'>
     <h1>Регистрация</h1>
     <p>Пожалуйста, введите данные для регистрации:</p>
-    <form action="." method="POST">
+    <form method="POST">
       {% csrf_token %}
-      {{ user_form.as_p }}<br>
+      <div class="col-md-12">
+        <label></label>
+        {{ user_form.email }}
+        <label></label>
+        {{ user_form.username }}
+        <label></label>
+        {{ user_form.password }}
+        <label></label>
+        {{ user_form.password2 }}
+      </div><br>
       <p><input type="submit" class="btn btn-outline-primary me-2" value="Регистрация"></p>
     </form>
   </div>

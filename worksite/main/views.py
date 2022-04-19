@@ -9,10 +9,10 @@ from rest_framework_simplejwt.tokens import RefreshToken
 
 def register(request):
     if request.method == "POST":
+
         user_form = RegistrationForm(request.POST)
         if user_form.is_valid():
-            cd = user_form.cleaned_data
-            User.objects.create_user(username=cd['username'], email=cd['email'], password=cd['password'])
+            user_form.save()
             return redirect('main')
         else:
             print(user_form.errors)

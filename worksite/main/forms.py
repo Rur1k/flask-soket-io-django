@@ -15,18 +15,6 @@ class LoginForm(forms.Form):
 
 
 class RegistrationForm(forms.ModelForm):
-    email = forms.CharField(widget=forms.TextInput(attrs={
-        'class': 'form-control me-2',
-        'placeholder': 'E-mail',
-    }))
-    username = forms.CharField(widget=forms.TextInput(attrs={
-        'class': 'form-control me-2',
-        'placeholder': 'Имя пользователя',
-    }))
-    password = forms.CharField(widget=forms.PasswordInput(attrs={
-        'class': 'form-control me-2',
-        'placeholder': 'Пароль',
-    }))
     password2 = forms.CharField(widget=forms.PasswordInput(attrs={
         'class': 'form-control me-2',
         'placeholder': 'Повторите пароль',
@@ -34,9 +22,24 @@ class RegistrationForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ('username', 'email')
+        fields = '__all__'
+        widgets = {
+            'email': forms.TextInput(attrs={
+                'class': 'form-control me-2',
+                'placeholder': 'Email'
+            }),
+            'username': forms.TextInput(attrs={
+                'class': 'form-control me-2',
+                'placeholder': 'Имя пользователя'
+            }),
+            'password': forms.PasswordInput(attrs={
+                'class': 'form-control me-2',
+                'placeholder': 'Пароль'
+            }),
+        }
 
     def clean_password2(self):
+        print('Я тут был, мед да пиво пил')
         cd = self.cleaned_data
         if cd['password'] != cd['password2']:
             raise forms.ValidationError('Пароли не совпадают.')
