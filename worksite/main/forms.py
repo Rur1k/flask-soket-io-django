@@ -39,7 +39,6 @@ class RegistrationForm(forms.ModelForm):
         }
 
     def clean_password2(self):
-        print('Я тут был, мед да пиво пил')
         cd = self.cleaned_data
         if cd['password'] != cd['password2']:
             raise forms.ValidationError('Пароли не совпадают.')

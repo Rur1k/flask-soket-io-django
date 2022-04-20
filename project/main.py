@@ -36,14 +36,14 @@ socketio = SocketIO(app)
 # todos = db.todos
 # tasks = db.tasks
 
-class User(db.Document):
-    user_id = db.IntField(primary_key=True)
-    username = db.StringField(required=True)
-    email = db.EmailField(required=True)
-    is_active = db.BooleanField(default=True)
-    is_staff = db.BooleanField(default=False)
-    created_at = db.DateTimeField()
-    updated_at = db.DateTimeField()
+# class User(db.Document):
+#     user_id = db.IntField(primary_key=True)
+#     username = db.StringField(required=True)
+#     email = db.EmailField(required=True)
+#     is_active = db.BooleanField(default=True)
+#     is_staff = db.BooleanField(default=False)
+#     created_at = db.DateTimeField()
+#     updated_at = db.DateTimeField()
 
 
 @app.route('/', methods=('GET', 'POST'))

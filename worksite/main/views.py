@@ -12,7 +12,9 @@ def register(request):
 
         user_form = RegistrationForm(request.POST)
         if user_form.is_valid():
-            user_form.save()
+            # user_form.save()
+            cd = user_form.cleaned_data
+            User.objects.create_user(username=cd['username'], email=cd['email'], password=cd['password'])
             return redirect('main')
         else:
             print(user_form.errors)
