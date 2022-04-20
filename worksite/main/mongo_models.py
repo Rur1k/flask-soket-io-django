@@ -4,6 +4,7 @@ from djongo import models
 class UserMongodb(models.Model):
     user_id = models.IntegerField(primary_key=True)
     username = models.CharField(db_index=True, max_length=255, unique=True)
+    password = models.CharField(max_length=255)
     email = models.EmailField(db_index=True, unique=True)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)

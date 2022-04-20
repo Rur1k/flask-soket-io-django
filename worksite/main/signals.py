@@ -1,37 +1,24 @@
-from django.db.models.signals import post_save, pre_save
+import json
+
+import pika
+from django.db.models.signals import post_save
 from django.dispatch import receiver
+from django.forms.models import model_to_dict
 from .models import User
-from .mongo_models import UserMongodb
 
 
 @receiver(post_save, sender=User, weak=False)
 def update_mongodb(sender, instance, **kwargs):
-    print('Сигнал работает')
-    user = UserMongodb.objects.using('mongo_database').filter(user_id=instance.pk)
-    print(user)
-    if user.first() is None:
-        UserMongodb.objects.using('mongo_database').create(
-                    user_id=instance.pk,
-                    username=instance.username,
-                    email=instance.email,
-                    is_active=instance.is_active,
-                    is_staff=instance.is_staff,
-                    created_at=instance.created_at,
-                    updated_at=instance.updated_at,
-                )
+    credentials = pika.PlainCredentials(username='admin', password='admin')
+    mq_connection = pika.BlockingConnection(pika.ConnectionParameters(host='localhost', credentials=credentials))
 
-    # users = User.objects.all()
-    # for obj in users:
-    #     if UserMongodb.objects.filter(user_id=obj.pk) is None:
-    #         UserMongodb.objects.create(
-    #             user_id=obj.pk,
-    #             username=obj.username,
-    #             email=obj.email,
-    #             is_active=obj.is_active,
-    #             is_staff=obj.is_staff,
-    #             created_at=obj.created_at,
-    #             updated_at=obj.updated_at,
-    #         )
+    mq_channel = mq_connection.channel()
+    mq_channel.queue_declare(queue='user_queue', durable=True)
+
+    jsonInstance = json.dumps(model_to_dict(instance)).encode('utf-8')
+
+    mq_channel.basic_publish(exchange='', routing_key='user_queue', body=jsonInstance)
+
+    mq_connection.close()
 
 
-# post_save.connect(update_mongodb, sender=User, weak=False)

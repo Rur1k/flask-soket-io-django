@@ -1,3 +1,5 @@
+import time
+
 from django.apps import AppConfig
 
 
@@ -7,3 +9,4 @@ class MainConfig(AppConfig):
 
     def ready(self):
         from . import signals
+        # from . import consumer
