@@ -1,4 +1,7 @@
 import os
+import json
+import pika
+import mongoengine as me
 from flask import Flask, render_template, request, url_for, redirect, jsonify
 from flask_mongoengine import MongoEngine
 # from pymongo import MongoClient
@@ -25,31 +28,17 @@ app.config['MONGODB_SETTINGS'] = {
 
 db = MongoEngine(app)
 jwt = JWTManager(app)
-# db.init_app(app)
 
 socketio = SocketIO(app)
 
 
-# Настройка подключения к БД и таблиц
-# client = MongoClient('localhost', 27017, username='flaskAdmin', password='password')
-# db = client.flask_db
-# todos = db.todos
-# tasks = db.tasks
-
-# class User(db.Document):
-#     user_id = db.IntField(primary_key=True)
-#     username = db.StringField(required=True)
-#     email = db.EmailField(required=True)
-#     is_active = db.BooleanField(default=True)
-#     is_staff = db.BooleanField(default=False)
-#     created_at = db.DateTimeField()
-#     updated_at = db.DateTimeField()
-
-
-@app.route('/', methods=('GET', 'POST'))
-def tasks():
-    return render_template('tasks.html')
-
+class User(me.Document):
+    user_id = me.IntField(primary_key=True)
+    username = me.StringField(required=True)
+    password = me.StringField(max_length=255)
+    email = me.EmailField(required=True)
+    is_active = me.BooleanField(default=True)
+    is_staff = me.BooleanField(default=False)
 
 
 # @app.route("/users", methods=["POST"])
@@ -95,5 +84,8 @@ def tasks():
 #     todos.delete_one({"_id": ObjectId(id)})
 #     return redirect(url_for('index'))
 
+
 if __name__ == '__main__':
+    import consumer
     socketio.run(app)
+
