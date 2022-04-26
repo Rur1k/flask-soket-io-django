@@ -13,5 +13,7 @@ urlpatterns = [
     path('cancel_task=<int:task_id>', views.cancel_task, name='cancel_task'),
     path('refusal_task=<int:task_id>', views.refusal_task, name='refusal_task'),
     path('delete_task=<int:task_id>', views.delete_task, name='delete_task'),
-    path('profile', views.profile, name='profile')
+    path('profile', views.profile, name='profile'),
+    path('chats', views.chats, name='chats')
+
 ]

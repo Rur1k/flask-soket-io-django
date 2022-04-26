@@ -126,3 +126,7 @@ def profile(request):
         'token': token
     }
     return render(request, 'profile.html', data)
+
+
+def chats(request):
+    return render(request, 'chats.html')
