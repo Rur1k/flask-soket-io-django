@@ -1,7 +1,7 @@
 import json
 
 import pika
-from main import User
+from models import User
 
 
 credentials = pika.PlainCredentials(username='admin', password='admin')

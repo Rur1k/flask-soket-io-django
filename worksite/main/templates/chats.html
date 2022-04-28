@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% block title %}Чаты{% endblock %}
 {% block content %}
 {% if messages %}
     {% for message in messages %}
@@ -94,73 +95,76 @@
                             </div>
                             <div class="chat-container">
                                 <ul id="chat-id" class="chat-box">
-                                    <li class="chat-left">
-                                        <div class="chat-avatar">
-                                            <img src="https://www.bootdey.com/img/Content/avatar/avatar3.png" alt="Retail Admin">
-                                            <div class="chat-name">User1</div>
-                                        </div>
-                                        <div class="chat-text">Hello, I'm Russell.
-                                            <br>How can I help you today?</div>
-                                        <div class="chat-hour">08:55</div>
-                                    </li>
-                                    <li class="chat-right">
-                                        <div class="chat-hour">08:56</div>
-                                        <div class="chat-text">Hi, Russell
-                                            <br> I need more information about Developer Plan.</div>
-                                        <div class="chat-avatar">
-                                            <img src="https://www.bootdey.com/img/Content/avatar/avatar3.png" alt="Retail Admin">
-                                            <div class="chat-name">Sam</div>
-                                        </div>
-                                    </li>
-                                    <li class="chat-left">
-                                        <div class="chat-avatar">
-                                            <img src="https://www.bootdey.com/img/Content/avatar/avatar3.png" alt="Retail Admin">
-                                            <div class="chat-name">Russell</div>
-                                        </div>
-                                        <div class="chat-text">Are we meeting today?
-                                            <br>Project has been already finished and I have results to show you.</div>
-                                        <div class="chat-hour">08:57</div>
-                                    </li>
-                                    <li class="chat-right">
-                                        <div class="chat-hour">08:59</div>
-                                        <div class="chat-text">Well I am not sure.
-                                            <br>I have results to show you.</div>
-                                        <div class="chat-avatar">
-                                            <img src="https://www.bootdey.com/img/Content/avatar/avatar5.png" alt="Retail Admin">
-                                            <div class="chat-name">Joyse</div>
-                                        </div>
-                                    </li>
-                                    <li class="chat-left">
-                                        <div class="chat-avatar">
-                                            <img src="https://www.bootdey.com/img/Content/avatar/avatar3.png" alt="Retail Admin">
-                                            <div class="chat-name">Russell</div>
-                                        </div>
-                                        <div class="chat-text">The rest of the team is not here yet.
-                                            <br>Maybe in an hour or so?</div>
-                                        <div class="chat-hour">08:57</div>
-                                    </li>
-                                    <li class="chat-right">
-                                        <div class="chat-hour">08:59</div>
-                                        <div class="chat-text">Have you faced any problems at the last phase of the project?</div>
-                                        <div class="chat-avatar">
-                                            <img src="https://www.bootdey.com/img/Content/avatar/avatar4.png" alt="Retail Admin">
-                                            <div class="chat-name">Jin</div>
-                                        </div>
-                                    </li>
-                                    <li class="chat-left">
-                                        <div class="chat-avatar">
-                                            <img src="https://www.bootdey.com/img/Content/avatar/avatar3.png" alt="Retail Admin">
-                                            <div class="chat-name">Russell</div>
-                                        </div>
-                                        <div class="chat-text">Actually everything was fine.
-                                            <br>I'm very excited to show this to our team.</div>
-                                        <div class="chat-hour">07:00</div>
-                                    </li>
+<!--                                    <li class="chat-left">-->
+<!--                                        <div class="chat-avatar">-->
+<!--                                            <img src="https://www.bootdey.com/img/Content/avatar/avatar3.png" alt="Retail Admin">-->
+<!--                                            <div class="chat-name">User1</div>-->
+<!--                                        </div>-->
+<!--                                        <div class="chat-text">Hello, I'm Russell.-->
+<!--                                            <br>How can I help you today?</div>-->
+<!--                                        <div class="chat-hour">08:55</div>-->
+<!--                                    </li>-->
+<!--                                    <li class="chat-right">-->
+<!--                                        <div class="chat-hour">08:56</div>-->
+<!--                                        <div class="chat-text">Hi, Russell-->
+<!--                                            <br> I need more information about Developer Plan.</div>-->
+<!--                                        <div class="chat-avatar">-->
+<!--                                            <img src="https://www.bootdey.com/img/Content/avatar/avatar3.png" alt="Retail Admin">-->
+<!--                                            <div class="chat-name">Sam</div>-->
+<!--                                        </div>-->
+<!--                                    </li>-->
+<!--                                    <li class="chat-left">-->
+<!--                                        <div class="chat-avatar">-->
+<!--                                            <img src="https://www.bootdey.com/img/Content/avatar/avatar3.png" alt="Retail Admin">-->
+<!--                                            <div class="chat-name">Russell</div>-->
+<!--                                        </div>-->
+<!--                                        <div class="chat-text">Are we meeting today?-->
+<!--                                            <br>Project has been already finished and I have results to show you.</div>-->
+<!--                                        <div class="chat-hour">08:57</div>-->
+<!--                                    </li>-->
+<!--                                    <li class="chat-right">-->
+<!--                                        <div class="chat-hour">08:59</div>-->
+<!--                                        <div class="chat-text">Well I am not sure.-->
+<!--                                            <br>I have results to show you.</div>-->
+<!--                                        <div class="chat-avatar">-->
+<!--                                            <img src="https://www.bootdey.com/img/Content/avatar/avatar5.png" alt="Retail Admin">-->
+<!--                                            <div class="chat-name">Joyse</div>-->
+<!--                                        </div>-->
+<!--                                    </li>-->
+<!--                                    <li class="chat-left">-->
+<!--                                        <div class="chat-avatar">-->
+<!--                                            <img src="https://www.bootdey.com/img/Content/avatar/avatar3.png" alt="Retail Admin">-->
+<!--                                            <div class="chat-name">Russell</div>-->
+<!--                                        </div>-->
+<!--                                        <div class="chat-text">The rest of the team is not here yet.-->
+<!--                                            <br>Maybe in an hour or so?</div>-->
+<!--                                        <div class="chat-hour">08:57</div>-->
+<!--                                    </li>-->
+<!--                                    <li class="chat-right">-->
+<!--                                        <div class="chat-hour">08:59</div>-->
+<!--                                        <div class="chat-text">Have you faced any problems at the last phase of the project?</div>-->
+<!--                                        <div class="chat-avatar">-->
+<!--                                            <img src="https://www.bootdey.com/img/Content/avatar/avatar4.png" alt="Retail Admin">-->
+<!--                                            <div class="chat-name">Jin</div>-->
+<!--                                        </div>-->
+<!--                                    </li>-->
+<!--                                    <li class="chat-left">-->
+<!--                                        <div class="chat-avatar">-->
+<!--                                            <img src="https://www.bootdey.com/img/Content/avatar/avatar3.png" alt="Retail Admin">-->
+<!--                                            <div class="chat-name">Russell</div>-->
+<!--                                        </div>-->
+<!--                                        <div class="chat-text">Actually everything was fine.-->
+<!--                                            <br>I'm very excited to show this to our team.</div>-->
+<!--                                        <div class="chat-hour">07:00</div>-->
+<!--                                    </li>-->
                                 </ul>
-                                <div class="form-group mt-3 mb-0 row">
-                                    <textarea class="form-control" rows="2" placeholder="Введите текст"></textarea>
-                                    <button class="btn btn-success">Отправить</button>
-                                </div>
+<!--                                <form id="message-form" action="" method="post">-->
+<!--                                    {% csrf_token %}-->
+                                    <div class="form-group mt-3 mb-0 row">
+                                        <textarea id='message-text' class="form-control" rows="2" placeholder="Введите текст"></textarea>
+                                        <input type="button" id="send-message" class="btn btn-success" value="Отправить">
+                                    </div>
+<!--                                </form>-->
                             </div>
                         </div>
                     </div>
@@ -176,5 +180,6 @@
     <!-- Content wrapper end -->
 
 </div>
+
 {% endif %}
 {% endblock %}

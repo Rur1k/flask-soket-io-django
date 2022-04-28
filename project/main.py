@@ -1,11 +1,6 @@
 import os
-import json
-import pika
-import mongoengine as me
 from flask import Flask, render_template, request, url_for, redirect, jsonify
 from flask_mongoengine import MongoEngine
-# from pymongo import MongoClient
-from bson.objectid import ObjectId
 from flask_socketio import SocketIO
 from dotenv import load_dotenv
 from flask_jwt_extended import create_access_token, JWTManager, jwt_required, get_jwt_identity
@@ -29,63 +24,19 @@ app.config['MONGODB_SETTINGS'] = {
 db = MongoEngine(app)
 jwt = JWTManager(app)
 
-socketio = SocketIO(app)
+socketio = SocketIO(app, cors_allowed_origins="*")
 
 
-class User(me.Document):
-    user_id = me.IntField(primary_key=True)
-    username = me.StringField(required=True)
-    password = me.StringField(max_length=255)
-    email = me.EmailField(required=True)
-    is_active = me.BooleanField(default=True)
-    is_staff = me.BooleanField(default=False)
+def messageReceived(methods=['GET', 'POST']):
+    print('message was received!!!')
 
 
-# @app.route("/users", methods=["POST"])
-# def register():
-#     new_user = request.get_json() # store the json body request
-#     new_user["password"] = hashlib.sha256(new_user["password"].encode("utf-8")).hexdigest() # encrpt password
-#     doc = User.find_one({"username": newha256(_user["username"]}) # check if user exist
-#     if not doc:
-#         User.insert_one(new_user)
-#         return jsonify({'msg': 'User created successfully'}), 201
-#     else:
-#         return jsonify({'msg': 'Username already exists'}), 409
-#
-#
-# @app.route("/login", methods=["post"])
-# def login():
-#     login_details = request.get_json() # store the json body request
-#     user_from_db = User.find_one({'username': login_details['username']})  # search for user in database
-#
-#     if user_from_db:
-#         encrpted_password = hashlib.sha256(login_details['password'].encode("utf-8")).hexdigest()
-#         if encrpted_password == user_from_db['password']:
-#             access_token = create_access_token(identity=user_from_db['username']) # create jwt token
-#             return jsonify(access_token=access_token), 200
-#
-#     return jsonify({'msg': 'The username or password is incorrect'}), 401
-
-# Тестовые данные для настройки запсии с БД и работой с тодо листом
-# @app.route('/todo', methods=('GET', 'POST'))
-# def todo():
-#     if request.method == 'POST':
-#         content = request.form['content']
-#         degree = request.form['degree']
-#         todos.insert_one({'content': content, 'degree': degree})
-#         return redirect(url_for('index'))
-#
-#     all_todos = todos.find()
-#     return render_template('todo.html', todos=all_todos)
-#
-#
-# @app.post('/todo/<id>/delete/')
-# def todo_delete(id):
-#     todos.delete_one({"_id": ObjectId(id)})
-#     return redirect(url_for('index'))
+@socketio.on('my event')
+def handler_my_custom_event(json, methods=['GET', 'POST']):
+    print('received my event: ' + str(json))
+    socketio.emit('my response', json, callback=messageReceived)
 
 
 if __name__ == '__main__':
-    import consumer
-    socketio.run(app)
+    socketio.run(app, debug=True)
 

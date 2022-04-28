@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
 <!--    <meta http-equiv="refresh" content="5">-->
-    <title>Задачи</title>
+    <title>{% block title %}Задачи{% endblock %}</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
     <link type="text/css" href="{% static 'css/chats.css'%}" rel="stylesheet">
@@ -23,7 +23,7 @@
             </ul>
             <div class="d-flex">
                 {% if request.user.is_authenticated %}
-                <input class="form-control me-2" placeholder="{{ request.user }}" readonly>
+                <input id='username' class="form-control me-2" value="{{ request.user }}" readonly>
                 <a href="{% url 'logout' %}" class="btn btn-outline-success" type="submit">Выход</a>
                 {% else %}
                 <form method="post" action="{% url 'login_user' %}">
@@ -48,9 +48,10 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script type="text/javascript" src="{% static 'js/main.js'%}"></script>
 
-<!--    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js" integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA==" crossorigin="anonymous"></script>-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js" integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA==" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="{% static 'js/socketio.js'%}"></script>
 <!--    <script type="text/javascript" charset="utf-8">-->
-<!--        var socket = io();-->
+<!--        var socket = io.connect('http://'+document.domain+':'+5000);-->
 <!--        socket.on('connect', function() {-->
 <!--            socket.emit('my event', {data: 'I\'m connected!'});-->
 <!--        });-->
