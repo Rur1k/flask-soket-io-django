@@ -1,7 +1,7 @@
 import os
 from flask import Flask, render_template, request, url_for, redirect, jsonify
 from flask_mongoengine import MongoEngine
-from flask_socketio import SocketIO
+from flask_socketio import SocketIO, send
 from dotenv import load_dotenv
 from flask_jwt_extended import create_access_token, JWTManager, jwt_required, get_jwt_identity
 import datetime
@@ -27,12 +27,17 @@ jwt = JWTManager(app)
 socketio = SocketIO(app, cors_allowed_origins="*")
 
 
+# @socketio.on('message')
+# def handleMessage(msg):
+#     print('Message: ' + msg)
+#     send(msg, broadcast=True)
+
 def messageReceived(methods=['GET', 'POST']):
     print('message was received!!!')
 
 
 @socketio.on('my event')
-def handler_my_custom_event(json, methods=['GET', 'POST']):
+def handle_my_custom_event(json, methods=['GET', 'POST']):
     print('received my event: ' + str(json))
     socketio.emit('my response', json, callback=messageReceived)
 
