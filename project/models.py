@@ -9,3 +9,9 @@ class User(me.Document):
     is_active = me.BooleanField(default=True)
     is_staff = me.BooleanField(default=False)
 
+
+class ChatHistory(me.Document):
+    message_id = me.SequenceField()
+    author = me.ReferenceField(User)
+    message = me.StringField()
+
