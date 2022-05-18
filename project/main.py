@@ -28,19 +28,28 @@ jwt = JWTManager(app)
 
 socketio = SocketIO(app, cors_allowed_origins="*")
 
+ROOMS = ['General']
+
 
 @app.route('/chat_history')
 def chatHistory():
-    messages = ChatHistory.objects()
-    print(messages)
-    return jsonify(messages)
+    objects = ChatHistory.objects()
+
+    message_list = []
+    for obj in objects:
+        message = {
+            'message_id': obj['message_id'],
+            'author_id': obj['author'].user_id,
+            'author': obj['author'].username,
+            'message': obj['message']
+        }
+        message_list.append(message)
+    print(message_list)
+    return jsonify(message_list)
 
 
 @socketio.on('message')
 def handle_message(json):
-    print(unquote(str(json)))
-    print(json.get('user_name'))
-
     user = User.objects(username=json.get('user_name')).first()
     if user:
         create_message = ChatHistory(author=user, message=unquote(str(json.get('message'))))
@@ -62,6 +71,10 @@ def on_leave(data):
     leave_room(data['room'])
     send({'msg': data['username'] + 'has left the'+data['room']+'room'}, room=data['room'])
 
+
+@socketio.on('new_room')
+def new_room(data):
+    pass
 
 
 

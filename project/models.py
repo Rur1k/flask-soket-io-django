@@ -10,8 +10,17 @@ class User(me.Document):
     is_staff = me.BooleanField(default=False)
 
 
+class Chat(me.Document):
+    chat_id = me.SequenceField()
+    customer = me.ReferenceField(User)
+    executor = me.ReferenceField(User)
+    date_create = me.DateTimeField()
+    is_general = me.BooleanField(default=False)
+
+
 class ChatHistory(me.Document):
     message_id = me.SequenceField()
+    chat = me.ReferenceField(Chat)
     author = me.ReferenceField(User)
     message = me.StringField()
 

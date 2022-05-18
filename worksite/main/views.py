@@ -132,18 +132,7 @@ def profile(request):
 def chats(request):
     url = 'http://127.0.0.1:5000/chat_history'
     response = requests.get(url)
-    message_list = []
-    for obj in response.json():
-        user = User.objects.filter(id=obj['author']).first()
-        if user:
-            message = {
-                'message_id': obj['message_id'],
-                'author': user,
-                'message': obj['message']
-            }
-
-            message_list.append(message)
     data = {
-        'chat_messages': message_list
+        'chat_messages': response.json()
     }
     return render(request, 'chats.html', data)

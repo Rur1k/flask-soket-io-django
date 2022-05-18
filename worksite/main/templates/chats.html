@@ -77,20 +77,20 @@
                             <div class="chat-container">
                                 <ul id="chat-id" class="chat-box">
                                     {% for chat_message in chat_messages %}
-                                        {% if chat_message.author.pk == request.user.pk %}
+                                        {% if chat_message.author_id == request.user.pk %}
                                             <li class="chat-right">
                                                 <div class="chat-hour">08:56</div>
                                                 <div class="chat-text">{{ chat_message.message }}</div>
                                                 <div class="chat-avatar">
                                                     <img src="https://www.bootdey.com/img/Content/avatar/avatar4.png" alt="Retail Admin">
-                                                    <div class="chat-name">{{ chat_message.author.username }}</div>
+                                                    <div class="chat-name">{{ chat_message.author }}</div>
                                                 </div>
                                             </li>
                                         {% else %}
                                             <li class="chat-left">
                                                 <div class="chat-avatar">
                                                     <img src="https://www.bootdey.com/img/Content/avatar/avatar3.png" alt="Retail Admin">
-                                                    <div class="chat-name">{{ chat_message.author.username }}</div>
+                                                    <div class="chat-name">{{ chat_message.author }}</div>
                                                 </div>
                                                 <div class="chat-text">{{ chat_message.message }}</div>
                                                 <div class="chat-hour">08:55</div>
