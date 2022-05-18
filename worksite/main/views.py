@@ -136,3 +136,14 @@ def chats(request):
         'chat_messages': response.json()
     }
     return render(request, 'chats.html', data)
+
+
+def private_chat(request, customer_id, executor_id):
+    # url = f'http://127.0.0.1:5000/chat_history/customer={customer_id}&executor={executor_id}'
+    # response = requests.get(url)
+    data = {
+        # 'chat_messages': response.json(),
+        'customer': User.objects.get(pk=customer_id),
+        'executor': User.objects.get(pk=executor_id),
+    }
+    return render(request, 'private_chat.html', data)

@@ -44,7 +44,9 @@
                          <div class="btn-group">
                              <a href="{% url 'cancel_task' obj.id %}" class="btn btn-warning">Отменить</a><br>
                              <a href="{% url 'delete_task' obj.id %}" class="btn btn-danger">Удалить</a>
-                             <a href="" class="btn btn-info">Чат</a>
+                             {% if obj.executor %}
+                             <a href="{% url 'private_chat' request.user.id obj.executor.id %}" class="btn btn-info">Чат</a>
+                             {% endif %}
                          </div>
                      </div>
                      {% endfor %}
@@ -74,7 +76,7 @@
                          <div class="btn-group">
                              <a href="{% url 'complete_task' obj.id %}" class="btn btn-success">Выполнена</a>
                              <a href="{% url 'refusal_task' obj.id %}" class="btn btn-danger">Отказаться</a>
-                             <a href="" class="btn btn-info">Чат</a>
+                             <a href="{% url 'private_chat' obj.creator.id request.user.id %}" class="btn btn-info">Чат</a>
                          </div>
                      </div>
                      {% endfor %}

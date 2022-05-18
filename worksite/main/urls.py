@@ -14,6 +14,6 @@ urlpatterns = [
     path('refusal_task=<int:task_id>', views.refusal_task, name='refusal_task'),
     path('delete_task=<int:task_id>', views.delete_task, name='delete_task'),
     path('profile', views.profile, name='profile'),
-    path('chats', views.chats, name='chats')
-
+    path('chats', views.chats, name='chats'),
+    path('chat/customer=<int:customer_id>&executor=<int:executor_id>', views.private_chat, name='private_chat')
 ]

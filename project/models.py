@@ -1,4 +1,5 @@
 import mongoengine as me
+import datetime
 
 
 class User(me.Document):
@@ -14,7 +15,8 @@ class Chat(me.Document):
     chat_id = me.SequenceField()
     customer = me.ReferenceField(User)
     executor = me.ReferenceField(User)
-    date_create = me.DateTimeField()
+    chat_name = me.StringField()
+    date_create = me.DateTimeField(default=datetime.datetime.utcnow)
     is_general = me.BooleanField(default=False)
 
 
@@ -23,4 +25,5 @@ class ChatHistory(me.Document):
     chat = me.ReferenceField(Chat)
     author = me.ReferenceField(User)
     message = me.StringField()
+    datetime = me.DateTimeField(default=datetime.datetime.utcnow)
 

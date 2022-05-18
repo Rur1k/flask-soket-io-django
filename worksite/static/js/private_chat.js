@@ -2,12 +2,14 @@ $(document).ready(function(){
 
 
     var socket = io.connect('http://127.0.0.1:5000');
-
+    var customer_id = $('#customer_id').val();
+    var executor_id = $('#executor_id').val();
+    var room = 'c_'+customer_id+'e_'+executor_id;
 
     socket.on('connect', function() {
         socket.emit('join', {
             'username': $('#username').val(),
-            'room': 'General'
+            'room': room
         })
 
 
@@ -17,7 +19,7 @@ $(document).ready(function(){
             socket.emit('message', {
                 user_name: $('#username').val(),
                 message: encodeURIComponent($('#message-text').val()),
-                room: 'General'
+                room: room,
             });
 
 
@@ -51,7 +53,7 @@ $(document).ready(function(){
     socket.on('disconnect', function(){
         socket.emit('leave', {
             'username': $('#username').val(),
-            'room': 'General'
+            'room': room,
         })
     });
 
@@ -62,5 +64,3 @@ $(document).ready(function(){
     });
 
 });
-
-
