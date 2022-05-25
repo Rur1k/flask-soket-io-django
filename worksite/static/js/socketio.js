@@ -1,5 +1,7 @@
 $(document).ready(function(){
 
+    var scroll_obj = document.getElementById("chat-id");
+    scroll_obj.scrollTop = scroll_obj.scrollHeight;
 
     var socket = io.connect('http://127.0.0.1:5000');
 
@@ -40,12 +42,15 @@ $(document).ready(function(){
                 +'</li>'
             )
         }
+
+        scroll_obj.scrollTop = scroll_obj.scrollHeight;
     });
 
     socket.on('join_message', function(msg){
         $('#chat-id').append(
                 '<li class="text-center"><div>'+'Пользователь <b>'+msg['username']+'</b>, подключился к чату.'+'</div></li>'
             )
+        scroll_obj.scrollTop = scroll_obj.scrollHeight;
     });
 
     socket.on('disconnect', function(){
@@ -59,6 +64,7 @@ $(document).ready(function(){
         $('#chat-id').append(
                 '<li class="text-center"><div>'+'Пользователь <b>'+msg['username']+'</b>, покинул чат.'+'</div></li>'
             )
+        scroll_obj.scrollTop = scroll_obj.scrollHeight;
     });
 
 });

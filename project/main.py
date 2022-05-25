@@ -6,7 +6,7 @@ from flask_socketio import SocketIO, send, join_room, leave_room
 from dotenv import load_dotenv
 from flask_jwt_extended import create_access_token, JWTManager, jwt_required, get_jwt_identity
 from urllib.parse import unquote
-from models import ChatHistory, User, Chat
+from models import ChatHistory, User, Chat, ChatUser
 
 load_dotenv()
 
@@ -50,6 +50,21 @@ def generate_chat(roomname):
             generate_chat(roomname)
 
 
+def add_user_to_chat(chat, user):
+    if chat and user:
+        is_chat_user = ChatUser.objects(chat=chat, user=user).first()
+        if is_chat_user is None:
+            create_chat_user = ChatUser(chat=chat, user=user)
+            create_chat_user.save()
+
+
+def delete_user_in_chat(chat, user):
+    if chat and user:
+        is_chat_user = ChatUser.objects(chat=chat, user=user).first()
+        if is_chat_user:
+            is_chat_user.delete()
+
+
 @app.route('/chat_history')
 def chatHistory():
     chat = generate_chat('General')
@@ -71,10 +86,8 @@ def chatHistory():
 def privateChatHistory(customer, executor):
     room = f'c_{customer}e_{executor}'
     chat = generate_chat(room)
-    print(chat)
 
     objects = ChatHistory.objects(chat=chat)
-    print(objects)
 
     message_list = []
     for obj in objects:
@@ -83,6 +96,22 @@ def privateChatHistory(customer, executor):
             'author_id': obj['author'].user_id,
             'author': obj['author'].username,
             'message': obj['message']
+        }
+        message_list.append(message)
+    return jsonify(message_list)
+
+
+@app.route('/chat_users/customer=<int:customer>&executor=<int:executor>')
+def privateChatUser(customer, executor):
+    room = f'c_{customer}e_{executor}'
+    chat = generate_chat(room)
+    objects = ChatUser.objects(chat=chat)
+
+    message_list = []
+    for obj in objects:
+        message = {
+            'user_id': obj['user'].user_id,
+            'user': obj['user'].username,
         }
         message_list.append(message)
     return jsonify(message_list)
@@ -104,16 +133,25 @@ def handle_message(json):
 def on_join(data):
     username = data['username']
     room = data['room']
-    generate_chat(room)
+
+    user = User.objects(username=username).first()
+    chat = generate_chat(room)
+    add_user_to_chat(chat, user)
+
     join_room(room)
     socketio.emit('join_message', data, room=room)
 
 
 @socketio.on('leave')
 def on_leave(data):
-    print('отключение работает')
     username = data['username']
-    leave_room(data['room'])
+    room = data['room']
+
+    user = User.objects(username=username).first()
+    chat = generate_chat(room)
+    delete_user_in_chat(chat, user)
+
+    leave_room(room)
     socketio.emit('leave_message', data, room=data['room'])
 
 

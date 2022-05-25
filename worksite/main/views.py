@@ -1,4 +1,5 @@
 import requests
+import os
 from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
@@ -6,7 +7,11 @@ from .models import User, Task
 from .forms import LoginForm, TaskForm, RegistrationForm
 from django.db.models import Q
 from rest_framework_simplejwt.tokens import RefreshToken
+from dotenv import load_dotenv
 
+load_dotenv()
+
+SERVER_FLASK = os.getenv('SERVER_FLASK')
 
 def register(request):
     if request.method == "POST":
@@ -130,7 +135,7 @@ def profile(request):
 
 
 def chats(request):
-    url = 'http://127.0.0.1:5000/chat_history'
+    url = f'{SERVER_FLASK}/chat_history'
     response = requests.get(url)
     data = {
         'chat_messages': response.json()
@@ -139,10 +144,13 @@ def chats(request):
 
 
 def private_chat(request, customer_id, executor_id):
-    url = f'http://127.0.0.1:5000/chat_history/customer={customer_id}&executor={executor_id}'
-    response = requests.get(url)
+    url_history = f'{SERVER_FLASK}/chat_history/customer={customer_id}&executor={executor_id}'
+    url_users = f'{SERVER_FLASK}/chat_users/customer={customer_id}&executor={executor_id}'
+    response_history = requests.get(url_history)
+    response_users = requests.get(url_users)
     data = {
-        'chat_messages': response.json(),
+        'users': response_users.json(),
+        'chat_messages': response_history.json(),
         'customer': User.objects.get(pk=customer_id),
         'executor': User.objects.get(pk=executor_id),
     }

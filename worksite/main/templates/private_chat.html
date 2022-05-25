@@ -26,31 +26,25 @@
                     <div class="row no-gutters">
                         <div class="col-xl-4 col-lg-4 col-md-4 col-sm-3 col-3">
                             <div class="users-container">
-                                <ul class="users">
-                                    <li class="person" data-chat="person1">
+                                <ul id="users" class="users">
+                                    {% for user in users %}
+                                    <li id="{{user.user}}" class="person" data-chat="person{{user.user_id}}">
                                         <div class="user">
                                             <img src="https://www.bootdey.com/img/Content/avatar/avatar1.png" alt="Retail Admin">
                                         </div>
                                         <p class="name-time">
-                                            <span class="name">{{customer.username}}</span>
-                                            <input id="customer_id" value="{{customer.pk}}" hidden="hidden">
+                                            <span class="chat-username name">{{user.user}}</span>
                                         </p>
                                     </li>
-                                    <li class="person" data-chat="person2">
-                                        <div class="user">
-                                            <img src="https://www.bootdey.com/img/Content/avatar/avatar2.png" alt="Retail Admin">
-                                        </div>
-                                        <p class="name-time">
-                                            <span class="name">{{executor.username}}</span>
-                                            <input id="executor_id" value="{{executor.pk}}" hidden="hidden">
-                                        </p>
-                                    </li>
+                                    {% endfor %}
                                 </ul>
                             </div>
                         </div>
                         <div class="col-xl-8 col-lg-8 col-md-8 col-sm-9 col-9">
                             <div class="selected-user">
-                                <span class="name">Приватный чат</span>
+                                <span class="name">Приватный чат ({{customer.username}}, {{executor.username}})</span>
+                                <input id="customer_id" value="{{customer.pk}}" hidden="hidden">
+                                <input id="executor_id" value="{{executor.pk}}" hidden="hidden">
                             </div>
                             <div class="chat-container">
                                 <ul id="chat-id" class="chat-box">

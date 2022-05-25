@@ -27,3 +27,8 @@ class ChatHistory(me.Document):
     message = me.StringField()
     datetime = me.DateTimeField(default=datetime.datetime.utcnow)
 
+
+class ChatUser(me.Document):
+    chat = me.ReferenceField(Chat)
+    user = me.ReferenceField(User)
+
