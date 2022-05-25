@@ -41,7 +41,7 @@ def generate_chat(roomname):
             create_chat.save()
             generate_chat(roomname)
     else:
-        chat = Chat.objects(chat_name=roomname)
+        chat = Chat.objects(chat_name=roomname).first()
         if chat:
             return chat
         else:
@@ -72,7 +72,9 @@ def privateChatHistory(customer, executor):
     room = f'c_{customer}e_{executor}'
     chat = generate_chat(room)
     print(chat)
+
     objects = ChatHistory.objects(chat=chat)
+    print(objects)
 
     message_list = []
     for obj in objects:

@@ -50,12 +50,6 @@ $(document).ready(function(){
             )
     });
 
-    socket.on('disconnect', function(){
-        socket.emit('leave', {
-            'username': $('#username').val(),
-            'room': room,
-        })
-    });
 
     socket.on('leave_message', function(msg){
         $('#chat-id').append(
